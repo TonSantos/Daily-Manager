@@ -1,0 +1,16 @@
+{
+  "name": "public",
+  "version": "0.0.0",
+  "authors": [
+    "Rafael da Rocha <rafael.rocha@fate.edu.br>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor/bower_components",
+    "test",
+    "tests"
+  ]
+}

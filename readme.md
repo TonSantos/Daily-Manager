@@ -16,6 +16,7 @@
 * bower install
 * php artisan migrate
 * php artisan key:generate
+* generate file .env for connection DB
 * php artisan serve - test
 
 ### Relationship

@@ -40,7 +40,7 @@
                         <div class="list-group">
                             @if( count($projects) > 0 )
                                 @foreach($projects as $project)
-                                <a href="{{url('app/projects/'.$project->id)}}" class="list-group-item">
+                                <a href="{{url('projects/'.$project->id)}}" class="list-group-item">
                                     <span class="badge"><i class="fa fa-user"></i> {{$project->user->name}}</span>
                                     {{$project->name}}
                                 </a>
@@ -52,7 +52,7 @@
                             @endif
                         </div>
                         <div class="text-right">
-                            <a href="{{route('app.projects.index')}}">Ver todos os Projetos <i class="fa fa-arrow-circle-right"></i></a>
+                            <a href="{{route('projects.index')}}">Ver todos os Projetos <i class="fa fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
                             @endif
                         </div>
                         <div class="text-right">
-                            <a href="{{route('app.teams.index')}}">Ver todos as Equipes <i class="fa fa-arrow-circle-right"></i></a>
+                            <a href="{{route('teams.index')}}">Ver todos as Equipes <i class="fa fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                 </div>
@@ -104,7 +104,7 @@
                             @endif
                         </div>
                         <div class="text-right">
-                            <a href="{{route('app.users.index')}}">Ver todos os Membros <i class="fa fa-arrow-circle-right"></i></a>
+                            <a href="{{route('users.index')}}">Ver todos os Membros <i class="fa fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                 </div>

@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Daily Manager</title>
-
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         
         <!-- Bootstrap CSS -->
         <link href="{{ url('css/app.css') }}" rel="stylesheet" type="text/css" />
@@ -54,19 +54,22 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                     <li class="one item-menu">
-                        <a href="{{ url('/app') }}"><i class="fa fa-fw fa-home"></i> Ínicio</a>
+                        <a href="{{ url('/') }}"><i class="fa fa-fw fa-home"></i> Ínicio</a>
                     </li>
                     <li class="item-menu">
-                        <a href="{{ route('app.users.index') }}"><i class="fa fa-fw fa-male"></i> Membros</a>
+                        <a href="{{ route('users.index') }}"><i class="fa fa-fw fa-male"></i> Membros</a>
                     </li>
                     <li class="item-menu">
                         <a href="javascript:;" data-toggle="collapse" data-target="#team"><i class="fa fa-fw fa-users"></i> Equipes <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="team" class="collapse">
                             <li>
-                                <a href="{{ route('app.teams.index') }}">Listar Todos</a>
+                                <a href="{{ url('users/'.Auth::user()->id.'/teams') }}">Minhas Equipes</a>
                             </li>
                             <li>
-                                <a href="{{ route('app.teams.create') }}">Criar</a>
+                                <a href="{{ route('teams.index') }}">Todos</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('teams.create') }}">Criar</a>
                             </li>
                         </ul>
                     </li>
@@ -74,10 +77,13 @@
                         <a href="javascript:;" data-toggle="collapse" data-target="#project"><i class="fa fa-clipboard"></i> Projetos <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="project" class="collapse">
                             <li>
-                                <a href="{{ route('app.projects.index') }}">Listar Todos</a>
+                                <a href="{{ url('users/'.Auth::user()->id.'/projects') }}">Meus Projetos</a>
                             </li>
                             <li>
-                                <a href="{{ route('app.projects.create') }}">Criar</a>
+                                <a href="{{ route('projects.index') }}">Todos</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('projects.create') }}">Criar</a>
                             </li>
                         </ul>
                     </li>

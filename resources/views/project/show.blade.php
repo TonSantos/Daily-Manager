@@ -7,7 +7,7 @@
                 <i class="fa fa-home"></i> <a href="{{url('/')}}"> Ínicio</a>
             </li>
             <li class="active">
-                <i class="fa fa-clipboard"></i> <a href="{{route('app.projects.index')}}"> Projetos</a>
+                <i class="fa fa-clipboard"></i> <a href="{{route('projects.index')}}"> Projetos</a>
             </li>
             <li class="active">
                 <i class="fa fa-hashtag"></i> {{$project->name}}
@@ -70,7 +70,8 @@
                                         @if($item->user->id == Auth::user()->id)
                                             <button type="button" class="close removeItemList" data-dismiss="alert" aria-hidden="true" data-id="{{$item->id}}">×</button>
                                         @endif
-                                       {{$item->description}}
+                                            <h4>{{$item->description}}</h4>
+                                            <i class="fa fa-user"></i> {{$item->user->name}}
                                     </div>
                                 @endif
                             @endforeach
@@ -94,7 +95,8 @@
                                         @if($item->user->id == Auth::user()->id)
                                             <button type="button" class="close removeItemList" data-dismiss="alert" aria-hidden="true" data-id="{{$item->id}}">×</button>
                                         @endif
-                                        {{$item->description}}
+                                            <h4>{{$item->description}}</h4>
+                                            <i class="fa fa-user"></i> {{$item->user->name}}
                                     </div>
                                 @endif
                             @endforeach
@@ -118,9 +120,10 @@
                                 @if($item->type == IMPEDIMENTS)
                                     <div class="alert alert-danger alert-dismissable">
                                         @if($item->user->id == Auth::user()->id)
-                                            <button type="button" class="close removeItemList" data-dismiss="alert" aria-hidden="true" data-id="{{$item->id}}">×</button>
+                                            <button type="button" class="close removeItemList" data-dismiss="alert" aria-hidden="true" data-id="{{$item->id}}" data-token="{{ csrf_token() }}">×</button>
                                         @endif
-                                        {{$item->description}}
+                                            <h4>{{$item->description}}</h4>
+                                            <i class="fa fa-user"></i> {{$item->user->name}}
                                     </div>
                                 @endif
                             @endforeach

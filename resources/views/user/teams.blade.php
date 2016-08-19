@@ -7,7 +7,10 @@
                 <i class="fa fa-home"></i> <a href="{{url('/')}}"> Ínicio</a>
             </li>
             <li class="active">
-                <i class="fa fa-users"></i> Equipes
+                <i class="fa fa-users"></i> <a href="{{url('/teams')}}"> Equipes</a>
+            </li>
+            <li class="active">
+                <i class="fa fa-user"></i> Minhas Equipes
             </li>
         </ol>
 
@@ -23,7 +26,7 @@
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title"><b>Equipes</b></h3>
+                <h3 class="panel-title"><b>Minhas Equipes</b></h3>
             </div>
             <div class="panel-body">
                 @if( count($teams) > 0 )
@@ -51,9 +54,9 @@
                                     </a></td>
                                 <td>
                                     @if($team->user->id == Auth::user()->id)
-                                    <a href="{{ url('teams/'.$team->id.'/edit/') }}" class="btn btn-warning btn-xs">
-                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar
-                                    </a>
+                                        <a href="{{ url('teams/'.$team->id.'/edit/') }}" class="btn btn-warning btn-xs">
+                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar
+                                        </a>
                                         <a class="btn btn-info btn-xs" href="{{url('team/'.$team->id.'/projects')}}">
                                             <i class="fa fa-clipboard" aria-hidden="true"></i> Projetos
                                         </a>
@@ -69,10 +72,9 @@
                         </tbody>
                     </table>
                 @else
-                    <p>Nenhuma equipe cadastrada até o momento.</p>
+                    <p>Você não faz parte de nenhuma Equipe até o momento.</p>
                 @endif
             </div>
-            {!! $teams->render() !!}
         </div>
     </div>
     @include('modal.team_users')

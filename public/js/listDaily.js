@@ -23,8 +23,10 @@ $('.addItemList').on('click', function () {
 $('.removeItemList').on('click', function () {
 
     var list_id = $(this).attr('data-id');
+    var url =  urlAPP()+'lists/'+list_id;
     $.ajax({
-        url: urlAPP()+'app/lists/'+list_id,
+        url: url,
+        data: { "_token": "{{ csrf_token() }}" },
         type: 'DELETE',
         success: function(result) {
             console.log(result);

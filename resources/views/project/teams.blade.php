@@ -7,13 +7,13 @@
                 <i class="fa fa-home"></i> <a href="{{url('/')}}"> Ínicio</a>
             </li>
             <li class="active">
-                <i class="fa fa-users"></i> <a href="{{route('teams.index')}}">Equipes</a>
+                <i class="fa fa-users"></i> <a href="{{route('projects.index')}}">Projetos</a>
             </li>
             <li class="active">
-                <i class="fa fa-hashtag"></i> {{$team->name}}
+                <i class="fa fa-hashtag"></i> {{$project->name}}
             </li>
             <li class="active">
-                <i class="fa fa-clipboard"></i> Add Projetos
+                <i class="fa fa-clipboard"></i> Add Equipes
             </li>
         </ol>
 
@@ -21,30 +21,30 @@
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h5 class="panel-title">Adicione ou remova Projetos para <b><i class="fa fa-hashtag"></i>{{$team->name}}</b></h5>
+                <h5 class="panel-title">Adicione ou remova Equipes para <b><a href="{{url('projects/'.$project->id)}}">{{$project->name}}</a></b></h5>
             </div>
             <div class="panel-body">
-                @if( count($projects) > 0 )
+                @if( count($teams) > 0 )
                     <table class="table table-striped table-bordered">
                         <thead>
                         <th>#</th>
-                        <th>Projeto</th>
-                        <th>Criador</th>
+                        <th>Equipe</th>
+                        <th>Lider</th>
                         <th>Selecionar</th>
                         </thead>
 
                         <tbody>
-                        @foreach($projects as $i => $project)
+                        @foreach($teams as $i => $team)
                             <tr>
                                 <td>{{$i+1}}</td>
-                                <td><a href="{{url('/projects/'.$project->id)}}">{{$project->name}}</a></td>
-                                <td>{{$project->user->name}}</td>
+                                <td>{{$team->name}}</td>
+                                <td>{{$team->user->name}}</td>
                                 <td>
                                     <button class="btn btn-xs addRemoverProjectTeam" data-project="{{$project->id}}" data-team="{{$team->id}}">
-                                        <div id="{{'statusAdd'.$project->id}}">
-                                            @if($checking = count($project->teams) > 0)
-                                                @foreach($project->teams as $teamProject)
-                                                    @if($checking = $teamProject->id == $team->id)
+                                        <div id="{{'statusAdd'.$team->id}}">
+                                            @if($checking = count($team->projects) > 0)
+                                                @foreach($team->projects as $projectTeam)
+                                                    @if($checking = $projectTeam->id == $project->id)
                                                         <i class="fa fa-check-circle-o fa-2x" style="color:green"></i>
                                                     @endif
                                                 @endforeach
@@ -61,10 +61,10 @@
                         </tbody>
                     </table>
                 @else
-                    <p>Nenhum projeto cadastrado até o momento.</p>
+                    <p>Nenhuma Equipe cadastrada até o momento.</p>
                 @endif
             </div>
-            {!! $projects->render() !!}
+            {!! $teams->render() !!}
         </div>
     </div>
 

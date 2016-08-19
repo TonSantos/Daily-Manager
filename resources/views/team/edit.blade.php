@@ -10,7 +10,7 @@
                 <i class="fa fa-home"></i> <a href="{{url('/')}}"> Ínicio</a>
             </li>
             <li class="active">
-                <i class="fa fa-users"></i> <a href="{{ route('app.teams.index') }}"> Equipes</a>
+                <i class="fa fa-users"></i> <a href="{{ route('teams.index') }}"> Equipes</a>
             </li>
             <li class="active">
                 <i class="fa fa-pencil"></i> Editar
@@ -26,7 +26,7 @@
             </div>
             <div class="panel-body">
                 @include('messages.status')
-                {!! Form::model($team, array('route' => array('app.teams.update', $team->id))) !!}
+                {!! Form::model($team, array('route' => array('teams.update', $team->id))) !!}
                 <input type="hidden" name="_method" value="PUT">
                 @include('forms._form_teams')
                 {!! Form::close() !!}

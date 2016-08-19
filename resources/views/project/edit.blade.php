@@ -10,7 +10,7 @@
                 <i class="fa fa-home"></i> <a href="{{url('/')}}"> Ínicio</a>
             </li>
             <li class="active">
-                <i class="fa fa-users"></i> <a href="{{ route('app.projects.index') }}"> Projetos</a>
+                <i class="fa fa-users"></i> <a href="{{ route('projects.index') }}"> Projetos</a>
             </li>
             <li class="active">
                 <i class="fa fa-pencil"></i> Editar
@@ -26,7 +26,7 @@
             </div>
             <div class="panel-body">
                 @include('messages.status')
-                {!! Form::model($project, array('route' => array('app.projects.update', $project->id))) !!}
+                {!! Form::model($project, array('route' => array('projects.update', $project->id))) !!}
                 <input type="hidden" name="_method" value="PUT">
                 @include('forms._form_projects')
                 {!! Form::close() !!}

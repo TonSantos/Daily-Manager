@@ -1,9 +1,12 @@
-$('.inforTeamsProject').on('click', function () {
 
+$('.inforTeamsProject').on('click', function () {
+    $('#teamsProject').html(loading);
+    $('#nameTeamProject').text(loadingLabel);
+    
     var id = $(this).attr('data-id');
     var name = $(this).attr('data-name');
 
-    $url = urlAPP() + 'app/project-teams/'+id;
+    $url = urlAPP() + 'project-teams/'+id;
 
     $.get( $url, function ( data ) {
 
@@ -18,7 +21,7 @@ $('.inforTeamsProject').on('click', function () {
             console.log(bodyTable);
         }else{
             bodyTable = '<tr >'+
-                '<td >Esse Projeto ainda não possui uma equipe</td>'+
+                '<td >Esse Projeto ainda não possui Equipe(s)</td>'+
                 '<td >#</td>'+
                 '</tr>';
         }

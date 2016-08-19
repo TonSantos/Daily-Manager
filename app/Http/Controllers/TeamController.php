@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Requests\TeamRequest;
 use App\Http\Controllers\Controller;
 use App\Team;
+use App\Project;
 
 class TeamController extends Controller
 {
@@ -20,7 +21,7 @@ class TeamController extends Controller
         'error' => [
             'status' => 'danger',
             'message' => 'Erro ao tentar realizar o processo.',
-            'icon'    => 'fa fa-times-circle-o'
+            'icon'    => 'fa-times-circle-o'
         ],
         'update' => [
             'status' => 'success',
@@ -36,10 +37,12 @@ class TeamController extends Controller
 
 
     protected $teamModel;
+    protected $projectModel;
 
-    public function __construct(Team $team)
+    public function __construct(Team $team, Project $project)
     {
         $this->teamModel = $team;
+        $this->projectModel = $project;
     }
 
     /**
@@ -82,9 +85,9 @@ class TeamController extends Controller
             //primeiro membro da equipe
             $team->members()->attach($id);
 
-            return redirect()->to('app/teams/')->with($this->output['success']);
+            return redirect()->to('teams/')->with($this->output['success']);
         }else {
-            return redirect()->to('app/teams/')->with($this->output['error']);
+            return redirect()->to('teams/')->with($this->output['error']);
         }
 
     }
@@ -126,9 +129,9 @@ class TeamController extends Controller
         $team = $this->teamModel->find($id);
 
         if( $team->update($request->all()) ) {
-            return redirect()->to('app/teams/')->with($this->output['update']);
+            return redirect()->to('teams/')->with($this->output['update']);
         }else {
-            return redirect()->to('app/teams/')->with($this->output['error']);
+            return redirect()->to('teams/')->with($this->output['error']);
         }
     }
 
@@ -160,43 +163,59 @@ class TeamController extends Controller
         return response()->json($projects);
     }
 
-    public function addProject($idProject,$idTeam)
+    public function addRemoveProject($idProject,$idTeam)
     {
         //insert relationship Project-Team
         $team = $this->teamModel->find($idTeam);
         $status = 0;/*status: if status>0 exist relationship*/
 
         foreach ($team->projects as $project):
-            if($idProject == $project->id){
+            if($idProject == $project->id):
                 $status++;
-            }
+            endif;
 
         endforeach;
         if($status > 0){
+            /*remove if exist relationship*/
+            $team->projects()->detach($idProject);
             return response()->json($this->output['error']);
         }else{
+            /*add if not exist elationship*/
             $team->projects()->attach($idProject);
             return response()->json($this->output['success']);
         }
         
     }
-    public function addMember($idUser, $idTeam)
+    public function addRemoveMember($idUser, $idTeam)
     {
         //insert relationship User-Team
         $team = $this->teamModel->find($idTeam);
-        $status = 0;/*status: if status>0 exist relationship*/
-
-        foreach ($team->projects as $project):
-            if($idUser == $project->id){
+        $status = 0;
+        foreach ($team->members as $user):
+            /*status: if exist relationship incremet status*/
+            if($idUser == $user->id):
                 $status++;
-            }
+            endif;
 
         endforeach;
+
         if($status > 0){
+            /*remove if exist relationship*/
+            $team->members()->detach($idUser);
             return response()->json($this->output['error']);
         }else{
+            /*add if not exist elationship*/
             $team->members()->attach($idUser);
             return response()->json($this->output['success']);
         }                                                                                                           
+    }
+    public function all($idProject)
+    {
+        /*PAGES - boostrap/autoload.php*/
+        $teams = $this->teamModel->paginate(PAGES);
+        $project = $this->projectModel->find($idProject);
+
+        return view('project.teams', compact('teams','project'));
+
     }
 }

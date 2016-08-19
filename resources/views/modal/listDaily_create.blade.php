@@ -12,7 +12,7 @@
                         <h3 class="panel-title"><b><i class="fa fa-plus-circle" aria-hidden="true"></i> Adicionar item</b></h3>
                     </div>
                     <div class="panel-body">
-                        {!! Form::open(['route' => 'app.lists.store']) !!}
+                        {!! Form::open(['route' => 'lists.store']) !!}
                         <div class="form-group">
                             <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
                             <input type="hidden" name="project_id" id="projectReference">

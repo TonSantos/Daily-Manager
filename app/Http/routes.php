@@ -11,28 +11,31 @@
 |
 */
 
-Route::get('/', function () {
-	return redirect('app/');
-});
 
 
-Route::group(['prefix' => 'app', 'middleware' => 'auth'], function ()
+Route::group(['prefix' => '/', 'middleware' => 'auth'], function ()
 {
 
 	Route::get('/','IndexController@index');
+
 	Route::resource('teams','TeamController');
 	Route::resource('projects','ProjectController');
 	Route::resource('users','UserController');
 	Route::resource('lists', 'ListDailyController');
 
-	Route::get('team-members/{id}','TeamController@members');
-	Route::get('team-projects/{id}','TeamController@projects');
-	Route::get('team/{id}/projects','ProjectController@all');
-	Route::get('team/{id}/users','UserController@all');
-	Route::get('team-project/{idProject}/{idTeam}','TeamController@addProject');
-	Route::get('team-member/{idUser}/{idTeam}','TeamController@addMember');
-	Route::get('member-teams/{idUser}','UserController@teams');
-	Route::get('project-teams/{idProject}','ProjectController@teams');
+	Route::get('users/{id}/teams', 'UserController@teams');
+	Route::get('users/{id}/projects','UserController@projects');
+
+
+	Route::get('team-members/{id}','TeamController@members');/*load members one team*/
+	Route::get('team-projects/{id}','TeamController@projects');/*load project one team*/
+	Route::get('project/{id}/teams','TeamController@all');/*list all teams from add project*/
+	Route::get('team/{id}/projects','ProjectController@all');/*list all projects from add team*/
+	Route::get('team/{id}/users','UserController@all');/*list all users from add team*/
+	Route::get('team-project/{idProject}/{idTeam}','TeamController@addRemoveProject');/*insert or delete relationship team-project*/
+	Route::get('team-member/{idUser}/{idTeam}','TeamController@addRemoveMember');/*insert or delete relationship team-member*/
+	Route::get('member-teams/{idUser}','UserController@teamsJson');/*list all teams of member*/
+	Route::get('project-teams/{idProject}','ProjectController@teamsJson');/*list all teams of project*/
 
 
 });

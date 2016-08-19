@@ -98,6 +98,39 @@ class UserController extends Controller
     {
         //
     }
+
+    public function projects($id)
+    {
+        /*projects in user member team of project*/
+
+        $user = $this->userModel->find($id);
+        $teams = $user->teams;
+        $projects = array();
+        foreach ($teams as $team):
+            foreach ($team->projects as $project):
+                /*checking if the member is part of more than one Team with the same Project */
+                if(count($projects) > 0):
+                        $aux = 0;
+                    foreach ($projects as $projectAux):
+                            if($project->id == $projectAux->id):
+                                $aux++;
+                            endif;
+                    endforeach;
+
+                    if($aux == 0):/* not find same Project*/
+                        $projects[] = $project;
+                    endif;
+
+                else:
+                    $projects[] = $project;
+                endif;
+
+            endforeach;
+        endforeach;
+        
+        return view('user.projects', compact('projects'));
+    }
+
     public function all($idTeam)
     {
         /*PAGES - boostrap/autoload.php*/
@@ -108,6 +141,13 @@ class UserController extends Controller
 
     }
     public function teams($id)
+    {
+        $user = $this->userModel->find($id);
+        $teams = $user->teams;
+
+        return view('user.teams', compact('teams'));
+    }
+    public function teamsJson($id)
     {
         $user = $this->userModel->find($id);
         $teams = $user->teams;

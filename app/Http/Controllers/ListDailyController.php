@@ -70,12 +70,11 @@ class ListDailyController extends Controller
     {
         //insert Item List
         $itemList = $this->listDailyModel->create($request->all());
-
-
+        
         if( $itemList->save() ) {
-            return redirect()->to('app/projects/'.$itemList->project_id)->with($this->output['success']);
+            return redirect()->to('projects/'.$itemList->project_id)->with($this->output['success']);
         }else {
-            return redirect()->to('app/projects/'.$itemList->project_id)->with($this->output['error']);
+            return redirect()->to('projects/'.$itemList->project_id)->with($this->output['error']);
         }
     }
 
@@ -121,13 +120,12 @@ class ListDailyController extends Controller
      */
     public function destroy($id)
     {
-        dd('entrou aqui');
-//        $itemList = $this->listDailyModel->find($id);
-//
-//        if($itemList->delete()){
-//            return response()->json($this->output['delete']);
-//        }else{
-//            return response()->json($this->output['error']);
-//        }
+        $itemList = $this->listDailyModel->find($id);
+
+        if($itemList->delete()){
+            return response()->json($this->output['delete']);
+        }else{
+            return response()->json($this->output['error']);
+        }
     }
 }

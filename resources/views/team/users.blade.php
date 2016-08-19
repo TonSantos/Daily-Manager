@@ -7,7 +7,7 @@
                 <i class="fa fa-home"></i> <a href="{{url('/')}}"> Ínicio</a>
             </li>
             <li class="active">
-                <i class="fa fa-users"></i> <a href="{{route('app.teams.index')}}">Equipes</a>
+                <i class="fa fa-users"></i> <a href="{{route('teams.index')}}">Equipes</a>
             </li>
             <li class="active">
                 <i class="fa fa-hashtag"></i> {{$team->name}}
@@ -21,7 +21,7 @@
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h5 class="panel-title"><b>Clique em selecionar para add Membros a {{$team->name}}</b></h5>
+                <h5 class="panel-title"><b>Adicione ou remova Membros de {{$team->name}}</b></h5>
             </div>
             <div class="panel-body">
                 @if( count($users) > 0 )
@@ -39,14 +39,22 @@
                                 <td>{{$i+1}}</td>
                                 <td>{{$user->name}}</td>
                                 <td>{{$user->email}}</td>
-                                <td class="addMemberTeam" data-user="{{$user->id}}" data-team="{{$team->id}}">
-                                    <div id="{{'statusAddUser'.$user->id}}">
-                                        @foreach($user->teams as $teamUser)
-                                            @if($teamUser->id == $team->id)
-                                                <i class="fa fa-check-circle-o fa-2x" style="color:green"></i>
+                                <td>
+                                    <button class="btn btn-xs addRemoverMemberTeam" data-user="{{$user->id}}" data-team="{{$team->id}}">
+                                        <div id="{{'statusAddUser'.$user->id}}">
+                                            @if($checking = count($user->teams) > 0)
+                                                @foreach($user->teams as $teamUser)
+                                                    @if($checking = $teamUser->id == $team->id)
+                                                        <i class="fa fa-check-circle-o fa-2x" style="color:green"></i>
+                                                    @endif
+                                                @endforeach
                                             @endif
-                                        @endforeach
-                                    </div>
+
+                                            @if(!$checking)
+                                                <i class="fa fa-circle-o fa-2x" aria-hidden="true"></i>
+                                            @endif
+                                        </div>
+                                    </button>
                                 </td>
                             </tr>
                         @endforeach

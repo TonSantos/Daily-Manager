@@ -78,9 +78,9 @@ class ProjectController extends Controller
         $project = $this->projectModel->create($request->all());
 
         if( $project->save() ) {
-            return redirect()->to('app/projects/')->with($this->output['success']);
+            return redirect()->to('projects/')->with($this->output['success']);
         }else {
-            return redirect()->to('app/projects/')->with($this->output['error']);
+            return redirect()->to('projects/')->with($this->output['error']);
         }
     }
 
@@ -132,9 +132,9 @@ class ProjectController extends Controller
         $project = $this->projectModel->find($id);
 
         if( $project->update($request->all()) ) {
-            return redirect()->to('app/projects/')->with($this->output['update']);
+            return redirect()->to('projects/')->with($this->output['update']);
         }else {
-            return redirect()->to('app/projects/')->with($this->output['error']);
+            return redirect()->to('projects/')->with($this->output['error']);
         }
     }
 
@@ -159,7 +159,7 @@ class ProjectController extends Controller
 
     }
 
-    public function teams($idProject)
+    public function teamsJson($idProject)
     {
         $project = $this->projectModel->find($idProject);
 
@@ -168,4 +168,5 @@ class ProjectController extends Controller
         return response()->json($teams);
 
     }
+    
 }

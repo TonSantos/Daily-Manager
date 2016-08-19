@@ -16,7 +16,7 @@
                             <table class="table table-striped table-bordered">
                                 <thead>
                                 <tr>
-                                    <th> Nome</th>
+                                    <th> Equipe</th>
                                     <th> Descrição</th>
                                 </tr>
                                 </thead>

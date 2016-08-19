@@ -7,7 +7,10 @@
                 <i class="fa fa-home"></i> <a href="{{url('/')}}"> Ínicio</a>
             </li>
             <li class="active">
-                <i class="fa fa-clipboard"></i> Projetos
+                <i class="fa fa-clipboard"></i> <a href="{{url('/projects')}}"> Projetos</a>
+            </li>
+            <li class="active">
+                <i class="fa fa-clipboard"></i> Meus Projetos
             </li>
         </ol>
 
@@ -46,12 +49,12 @@
                                         <span class="badge">{{count($project->teams)}}</span>
                                     </a></td>
                                 <td>@if($project->user->id == Auth::user()->id)
-                                    <a href="{{ url('projects/'.$project->id.'/edit/') }}" class="btn btn-warning btn-xs">
-                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar
-                                    </a>
-                                    <a class="btn btn-info btn-xs" href="{{url('project/'.$project->id.'/teams')}}">
-                                        <i class="fa fa-users" aria-hidden="true"></i> Equipes
-                                    </a>
+                                        <a href="{{ url('projects/'.$project->id.'/edit/') }}" class="btn btn-warning btn-xs">
+                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar
+                                        </a>
+                                        <a class="btn btn-info btn-xs" href="{{url('project/'.$project->id.'/teams')}}">
+                                            <i class="fa fa-users" aria-hidden="true"></i> Equipes
+                                        </a>
                                     @else
                                         <i class="fa fa-lock"></i>
                                     @endif
@@ -61,13 +64,12 @@
                         </tbody>
                     </table>
                 @else
-                    <p>Nenhum projeto cadastrado até o momento.</p>
+                    <p>Você não participa de nenhum Projeto até o momento.</p>
                 @endif
             </div>
-            {!! $projects->render() !!}
         </div>
     </div>
-@include('modal.project_teams')
+    @include('modal.project_teams')
 @stop
 @section( 'scripts' )
     <script src="{{ url('js/project.js') }}" type="text/javascript"></script>

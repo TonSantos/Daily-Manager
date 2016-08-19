@@ -10,7 +10,7 @@
                 <i class="fa fa-home"></i> <a href="{{url('/')}}"> Ínicio</a>
             </li>
             <li class="active">
-                <i class="fa fa-users"></i> <a href="{{ route('app.teams.index') }}"> Equipes</a>
+                <i class="fa fa-users"></i> <a href="{{ route('teams.index') }}"> Equipes</a>
             </li>
             <li class="active">
                 <i class="fa fa-plus-circle"></i> Criar
@@ -26,7 +26,7 @@
             </div>
             <div class="panel-body">
                 @include('messages.status')
-                {!! Form::open(['route' => 'app.teams.store']) !!}
+                {!! Form::open(['route' => 'teams.store']) !!}
                 @include('forms._form_teams')
                 {!! Form::close() !!}
             </div>

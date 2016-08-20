@@ -29,7 +29,7 @@ class TeamController extends Controller
             'icon'    => 'fa-check-circle-o'
         ],
         'delete' => [
-            'status' => 'success',
+            'status' => 'ok',
             'message' => 'Equipe removida com sucesso.',
             'icon'   => 'fa-check-circle-o'
         ]
@@ -82,7 +82,7 @@ class TeamController extends Controller
         $id = $team->user_id;
 
         if( $team->save() ) {
-            //primeiro membro da equipe
+            //first member of the team is the creator, add relationship
             $team->members()->attach($id);
 
             return redirect()->to('teams/')->with($this->output['success']);
@@ -143,11 +143,22 @@ class TeamController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $team = $this->teamModel->find($id);
+
+        $team->projects()->detach();/*remove relatioship with projects*/
+        $team->members()->detach();/*remove relationshio with users*/
+
+        if($team->delete()){
+            return response()->json($this->output['delete']);
+        }else{
+            return response()->json($this->output['error']);
+        }
+
     }
 
     public function members($id)
     {
+        /*return members in JSON*/
         $team = $this->teamModel->find($id);
 
         $users = $team->members;
@@ -156,6 +167,7 @@ class TeamController extends Controller
     }
     public function projects($id)
     {
+        /*return projects in JSON*/
         $team = $this->teamModel->find($id);
 
         $projects = $team->projects;
@@ -166,21 +178,23 @@ class TeamController extends Controller
     public function addRemoveProject($idProject,$idTeam)
     {
         //insert relationship Project-Team
+
         $team = $this->teamModel->find($idTeam);
         $status = 0;/*status: if status>0 exist relationship*/
 
         foreach ($team->projects as $project):
+            /*teste if exist it's team of the Project*/
             if($idProject == $project->id):
                 $status++;
             endif;
 
         endforeach;
         if($status > 0){
-            /*remove if exist relationship*/
+            /*remove, if exist relationship*/
             $team->projects()->detach($idProject);
-            return response()->json($this->output['error']);
+            return response()->json($this->output['delete']);
         }else{
-            /*add if not exist elationship*/
+            /*add,if not exist elationship*/
             $team->projects()->attach($idProject);
             return response()->json($this->output['success']);
         }
@@ -189,6 +203,7 @@ class TeamController extends Controller
     public function addRemoveMember($idUser, $idTeam)
     {
         //insert relationship User-Team
+
         $team = $this->teamModel->find($idTeam);
         $status = 0;
         foreach ($team->members as $user):
@@ -202,7 +217,7 @@ class TeamController extends Controller
         if($status > 0){
             /*remove if exist relationship*/
             $team->members()->detach($idUser);
-            return response()->json($this->output['error']);
+            return response()->json($this->output['delete']);
         }else{
             /*add if not exist elationship*/
             $team->members()->attach($idUser);
@@ -213,9 +228,19 @@ class TeamController extends Controller
     {
         /*PAGES - boostrap/autoload.php*/
         $teams = $this->teamModel->paginate(PAGES);
+        $results = array();/*id's teams*/
         $project = $this->projectModel->find($idProject);
 
-        return view('project.teams', compact('teams','project'));
+        foreach ($teams as $team):
+            $results[$team->id] = false;/*the team, default, not percente this Project */
+            foreach ($project->teams as $teamProject):
+                if($team->id == $teamProject->id):
+                    /*if the team working on the project, change to true*/
+                    $results[$team->id] = true;
+                endif;
+            endforeach;
+        endforeach;
 
+        return view('project.teams', compact('teams','project','results'));
     }
 }

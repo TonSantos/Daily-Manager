@@ -22,3 +22,7 @@
         </div>
     @endif
 </div>
+
+
+<div class="col-md-12" id="resultDelete">
+</div>

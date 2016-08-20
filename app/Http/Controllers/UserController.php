@@ -133,12 +133,22 @@ class UserController extends Controller
 
     public function all($idTeam)
     {
-        /*PAGES - boostrap/autoload.php*/
-        $users = $this->userModel->paginate(PAGES);
-        $team = $this->teamModel->find($idTeam);
+            /*PAGES - boostrap/autoload.php*/
+            $users = $this->userModel->paginate(PAGES);
+            $results = array();/*ids users team*/
+            $team = $this->teamModel->find($idTeam);
 
-        return view('team.users', compact('users','team'));
+            foreach ($users as $user):
+                $results[$user->id] = false;
+                foreach ($team->members as $userTeam):
+                    if($user->id == $userTeam->id):
+                        /*it's user is team member*/
+                        $results[$user->id] = true;
+                    endif;
+                endforeach;
+            endforeach;
 
+        return view('team.users', compact('users','team','results'));
     }
     public function teams($id)
     {

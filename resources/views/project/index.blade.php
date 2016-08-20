@@ -38,7 +38,7 @@
 
                         <tbody>
                         @foreach($projects as $i => $project)
-                            <tr>
+                            <tr id="{{"rowElement".$project->id}}">
                                 <td>{{$i+1}}</td>
                                 <td><a href="{{url('projects/'.$project->id)}}">{{$project->name}}</a></td>
                                 <td>{{$project->user->name}}</td>
@@ -52,6 +52,9 @@
                                     <a class="btn btn-info btn-xs" href="{{url('project/'.$project->id.'/teams')}}">
                                         <i class="fa fa-users" aria-hidden="true"></i> Equipes
                                     </a>
+                                    <button class="btn btn-danger btn-xs deleteButton" data-id="{{$project->id}}" data-name="{{$project->name}}" data-type="Projeto">
+                                        <i class="fa fa-trash" aria-hidden="true"></i> Excluir
+                                    </button>
                                     @else
                                         <i class="fa fa-lock"></i>
                                     @endif

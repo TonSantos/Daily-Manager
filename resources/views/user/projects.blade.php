@@ -41,7 +41,7 @@
 
                         <tbody>
                         @foreach($projects as $i => $project)
-                            <tr>
+                            <tr id="{{"rowElement".$team->id}}">
                                 <td>{{$i+1}}</td>
                                 <td><a href="{{url('projects/'.$project->id)}}">{{$project->name}}</a></td>
                                 <td>{{$project->user->name}}</td>
@@ -55,6 +55,9 @@
                                         <a class="btn btn-info btn-xs" href="{{url('project/'.$project->id.'/teams')}}">
                                             <i class="fa fa-users" aria-hidden="true"></i> Equipes
                                         </a>
+                                        <button class="btn btn-danger btn-xs deleteButton" data-id="{{$project->id}}" data-name="{{$project->name}}" data-type="Projeto">
+                                            <i class="fa fa-trash" aria-hidden="true"></i> Excluir
+                                        </button>
                                     @else
                                         <i class="fa fa-lock"></i>
                                     @endif
@@ -64,7 +67,7 @@
                         </tbody>
                     </table>
                 @else
-                    <p>Você não participa de nenhum Projeto até o momento.</p>
+                    <p>Você não participa de nenhum <b>Projeto</b> até o momento.<br> Para fazer parte de um <b>Projeto</b>, você deve fazer parte de uma <b>Equipe</b> desse <b>Projeto</b></p>
                 @endif
             </div>
         </div>

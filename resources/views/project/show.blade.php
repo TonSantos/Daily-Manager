@@ -27,7 +27,7 @@
                     <table class="table table-striped table-bordered">
                         <thead>
                         <th>Nome</th>
-                        <th>Lider</th>
+                        <th>Criador</th>
                         <th>Membros</th>
                         </thead>
 

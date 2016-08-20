@@ -30,7 +30,7 @@ class ProjectController extends Controller
             'icon'    => 'fa-check-circle-o'
         ],
         'delete' => [
-            'status' => 'success',
+            'status' => 'ok',
             'message' => 'Projeto removido com sucesso.',
             'icon'   => 'fa-check-circle-o'
         ]
@@ -95,7 +95,7 @@ class ProjectController extends Controller
         $project = $this->projectModel->find($id);
         $status = 0;
 
-        /*if user is from team it's project, status > 0*/
+        /*if the User belongs to the times of the same project , status> 0*/
         foreach ($project->teams as $team):
             foreach ($team->members as $user):
                 if($user->id == Auth::user()->id):
@@ -146,21 +146,44 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $project = $this->projectModel->find($id);
+
+        $project->teams()->detach();
+        $project->lists()->delete();
+
+        if($project->delete()){
+            return response()->json($this->output['delete']);
+        }else{
+            return response()->json($this->output['error']);
+        }
     }
 
     public function all($idTeam)
     {
         /*PAGES - boostrap/autoload.php*/
         $projects = $this->projectModel->paginate(PAGES);
+        $results = array();/*id's projects team*/
         $team = $this->teamModel->find($idTeam);
 
-        return view('team.projects', compact('projects','team'));
+
+        foreach ($projects as $project):
+            $results[$project->id] = false;/*the project, default, not percente this team */
+            foreach ($team->projects as $projectTeam):
+                    if($project->id == $projectTeam->id):
+                        /*if the team working on the project, change to true*/
+                        $results[$project->id] = true;
+                    endif;
+            endforeach;
+        endforeach;
+
+        
+        return view('team.projects', compact('projects','team','results'));
 
     }
 
     public function teamsJson($idProject)
     {
+        /*return in JSON teams of Project */
         $project = $this->projectModel->find($idProject);
 
         $teams = $project->teams;

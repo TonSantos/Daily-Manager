@@ -30,6 +30,7 @@ class IndexController extends Controller
      */
     public function index()
     {
+        /*loading information to page welcome */
         $users  = $this->userModel->orderBy('id', 'desc')->paginate(5);
         $projects = $this->projectModel->orderBy('id','desc')->paginate(5);
         $teams = $this->teamModel->orderBy('id','desc')->paginate(5);

@@ -99,6 +99,7 @@
 
             @yield( 'content' )
             @include('modal.about')
+            @include('modal.delete')
         </div>
         <!-- /#page-wrapper -->
 
@@ -114,6 +115,7 @@
     <!-- Bootstrap -->
     <script type="text/javascript" src="{{ url('js/bootstrap.min.js') }}"></script>
     <script type="text/javascript" src="{{url('js/app.js')}}" ></script>
+    <script type="text/javascript" src="{{url('js/delete.js')}}" ></script>
     
     @yield( 'scripts' )
     

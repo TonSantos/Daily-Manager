@@ -41,18 +41,12 @@
                                 <td>{{$project->user->name}}</td>
                                 <td>
                                     <button class="btn btn-xs addRemoverProjectTeam" data-project="{{$project->id}}" data-team="{{$team->id}}">
-                                        <div id="{{'statusAdd'.$project->id}}">
-                                            @if($checking = count($project->teams) > 0)
-                                                @foreach($project->teams as $teamProject)
-                                                    @if($checking = $teamProject->id == $team->id)
-                                                        <i class="fa fa-check-circle-o fa-2x" style="color:green"></i>
-                                                    @endif
-                                                @endforeach
-                                            @endif
-
-                                            @if(!$checking)
-                                                <i class="fa fa-circle-o fa-2x" aria-hidden="true"></i>
-                                            @endif
+                                        <div id="{{'statusAddProject'.$project->id}}">
+                                                @if($results[$project->id])
+                                                    <i class="fa fa-check-circle-o fa-2x" style="color:green"></i>
+                                                    @else
+                                                    <i class="fa fa-circle-o fa-2x" aria-hidden="true"></i>
+                                                @endif
                                         </div>
                                     </button>
                                 </td>

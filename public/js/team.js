@@ -63,9 +63,11 @@ $('.addRemoverProjectTeam').on('click', function () {
     $.get( url, function ( data ) {
         console.log(data);
         if(data.status == 'success'){
-            $("#statusAdd"+project_id).html('<i class="fa '+ data.icon +' fa-2x" style="color:green"></i>');
+            $("#statusAddTeam"+team_id).html('<i class="fa '+ data.icon +' fa-2x" style="color:green"></i>');
+            $("#statusAddProject"+project_id).html('<i class="fa '+ data.icon +' fa-2x" style="color:green"></i>');
         }else{
-            $("#statusAdd"+project_id).html('<i class="fa fa-circle-o fa-2x" aria-hidden="true"></i>');
+            $("#statusAddTeam"+team_id).html('<i class="fa fa-circle-o fa-2x" aria-hidden="true"></i>');
+            $("#statusAddProject"+project_id).html('<i class="fa fa-circle-o fa-2x" aria-hidden="true"></i>');
         }
     });
 });
